@@ -10,7 +10,7 @@ export default function Header() {
           </h1>
         </div>
         <p className="text-center text-lg md:text-xl text-[#d47f43] font-medium">
-          Product Requirement Documentation
+          Product Technical Documentation
         </p>
       </div>
     </header>

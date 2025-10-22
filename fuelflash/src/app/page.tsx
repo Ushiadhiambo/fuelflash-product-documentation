@@ -239,12 +239,12 @@ export default function App() {
 },
 
     {
-      id: 'proposed-solution',
-      title: 'Proposed Solution (FuelFlash)',
+      id: 'Solution',
+      title: 'Solution (FuelFlash)',
       content: (
         <div className="space-y-6">
           <p className="text-foreground/80 leading-relaxed">
-            The proposed solution is an SMS alert system where the admin updates the fuel price changes. The alert is sent automatically to the end user once the changes are made. The fuel updates according to RURA are changed every two months, which sometimes may change during the two months due to factors like inflation and market price. Overall, it offers a convenient and reliable way to stay updated on fuel prices in real time.
+            The solution is an SMS alert system where the admin updates the fuel price changes. The alert is sent automatically to the end user once the changes are made. The fuel updates according to RURA are changed every two months, which sometimes may change during the two months due to factors like inflation and market price. Overall, it offers a convenient and reliable way to stay updated on fuel prices in real time.
           </p>
 
           <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
@@ -261,11 +261,10 @@ export default function App() {
               <div>
                 <h5 className="font-semibold text-[#f9c784] mb-2">USSD Subscription</h5>
                 <p className="text-foreground/70 text-sm mb-2">
-                  A guided process to create a user profile linked to their phone number and name. Example: A vehicle owner dials *145#. The system prompts: "Welcome to FuelFlash! Please enter your full name:"
+                  A guided process to create a user profile linked to their phone number and name. Example: A vehicle owner dials *384*33121#. The system prompts: "Welcome to FuelFlash! Please enter your full name:"
                 </p>
                 <ul className="space-y-1 text-foreground/60 text-sm ml-4">
                   <li>• User registration via USSD menu</li>
-                  <li>• View current fuel prices</li>
                   <li>• Unsubscribe option</li>
                 </ul>
               </div>
@@ -322,7 +321,6 @@ export default function App() {
               </p>
               <ul className="space-y-1 text-foreground/60 text-sm">
                 <li>• User registration</li>
-                <li>• Real-time price viewing</li>
                 <li>• Subscription management</li>
               </ul>
             </div>
