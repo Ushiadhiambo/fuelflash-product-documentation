@@ -43,9 +43,10 @@ export default function ImageModal({ imageSrc, onClose }: ImageModalProps) {
         <img
           src={imageSrc}
           alt="Enlarged diagram"
-          className="w-full h-auto rounded-lg shadow-2xl"
+          width={400} height={400}
         />
       </div>
     </div>
   );
 }
+
