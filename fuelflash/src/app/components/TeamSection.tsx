@@ -5,22 +5,22 @@ export default function TeamSection() {
   const team = [
     {
       name: 'Keza Queen',
-      role: 'Lead Developer',
+      role: 'Software Engineer',
       image: '/images/keza.png',
     },
     {
       name: 'Ushi Adhiambo',
-      role: 'Product Manager',
+      role: 'Software Engineer',
       image: '/images/ushi.png',
     },
     {
       name: 'Faith Koduen',
-      role: 'Backend Engineer',
+      role: 'Software Engineer',
       image: '/images/faith.png',
     },
     {
       name: 'Magret David',
-      role: 'UX Designer',
+      role: 'Software Engineer',
       image: '/images/Jumbe.png',
     },
   ];
