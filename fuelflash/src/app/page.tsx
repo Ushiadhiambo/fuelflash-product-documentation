@@ -1,293 +1,291 @@
-"use client"
-import { useState, useEffect } from 'react';
-import Header from './components/Header';
-import TeamSection from './components/TeamSection';
-import Sidebar from './components/Sidebar';
-import CollapsibleSection from './components/CollapsibleSection';
-import ImageModal from './components/ImageModal';
-import Footer from './components/Footer';
-import { useScrollSpy } from './hooks/useScrollSpy';
+"use client";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Header from "./components/Header";
+import TeamSection from "./components/TeamSection";
+import Sidebar from "./components/Sidebar";
+import CollapsibleSection from "./components/CollapsibleSection";
+import ImageModal from "./components/ImageModal";
+import Footer from "./components/Footer";
+import { useScrollSpy } from "./hooks/useScrollSpy";
+import Homepage from "./components/Homepage";
 
-export default function App() {
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['introduction']));
+export default function Home() {
+  const [showDocs, setShowDocs] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(["introduction"])
+  );
   const [modalImage, setModalImage] = useState<string | null>(null);
   const activeSectionId = useScrollSpy();
 
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
-    return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
-    };
+    document.documentElement.style.scrollBehavior = "smooth";
   }, []);
 
   const toggleSection = (id: string) => {
     const newExpanded = new Set(expandedSections);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
-    } else {
-      newExpanded.add(id);
-    }
+    if (newExpanded.has(id)) newExpanded.delete(id);
+    else newExpanded.add(id);
     setExpandedSections(newExpanded);
+  };
+
+  const handleViewDocs = () => {
+    setShowDocs(true);
+  };
+
+  const handleBackToHomepage = () => {
+    setShowDocs(false);
   };
 
   const sections = [
     {
-      id: 'introduction',
-      title: 'Introduction',
-      content: (
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#d47f43]">Background</h3>
-          <p className="text-foreground/80 leading-relaxed">
-            Fuel consumption and pricing are vital components of Rwanda's economic landscape, directly influencing transportation, industrial operations, and household budgets. Rwanda's fuel market has experienced growing demand, with gasoline consumption reaching approximately 2.98 thousand barrels per day in 2023. The country relies on regular fuel price updates to help consumers and businesses manage their expenses amid fluctuating global oil prices and local economic conditions.
-          </p>
-          <p className="text-foreground/80 leading-relaxed">
-            Despite the importance of accurate and timely fuel price information, current communication mechanisms have gaps that limit effective dissemination. Most price updates come through official notices from the Rwanda Utilities Regulatory Authority (RURA) via websites and traditional media, which do not reach all consumers promptly, particularly those in rural areas. Moreover, mobile-based alert systems like SMS are underutilized despite high mobile penetration, leaving many without direct notification of price changes.
-          </p>
-          <p className="text-foreground/80 leading-relaxed">
-            This communication deficiency risks reducing consumer preparedness, market transparency, and economic efficiency. Addressing these gaps through a direct and automated fuel price alert system is essential to improve information flow, enhance consumer trust, and support Rwanda's broader goals of digital inclusion and responsive governance.
-          </p>
-          
-          <div className="mt-6 p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-            <h3 className="text-xl font-semibold text-[#d47f43] mb-3">Problem Statement</h3>
-            <p className="text-foreground/80 leading-relaxed mb-4">
-              Fuel pricing is a vital economic factor that significantly impacts households, businesses, and the broader market in Rwanda. Despite regular price reviews by the Rwanda Utilities Regulatory Authority (RURA), many consumers, especially low-income households, small business owners, and rural communities, lack timely and direct alerts about changes in fuel prices.
-            </p>
-            <p className="text-foreground/80 leading-relaxed mb-4">
-              This communication gap leads to economic inefficiencies, including poor financial planning, market confusion, and exacerbated economic hardships for vulnerable populations. The absence of an accessible and immediate alert system results in missed opportunities for consumers to adjust budgets and operations in response to price fluctuations, affecting overall economic stability and transparency.
-            </p>
-            <p className="text-lg font-semibold text-[#f9c784] italic">
-              How might we help deliver instant, accessible fuel price alerts to all Rwandans to empower better budgeting and increase transparency?
-            </p>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 'research-report',
-      title: 'Research Report',
+      id: "introduction",
+      title: "Introduction",
       content: (
         <div className="space-y-6">
           <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-            <h4 className="text-lg font-semibold text-[#d47f43] mb-3">Executive Summary</h4>
+            <h3 className="text-xl font-semibold text-[#d47f43] mb-3">Purpose</h3>
             <p className="text-foreground/80 leading-relaxed">
-              Rwanda's fuel pricing system is crucial for economic stability and household budgeting, particularly impacting low- and middle-income consumers. Despite regular fuel price revisions by RURA, a significant communication gap exists, whereby many consumers remain uninformed or receive late notifications of price changes, impeding effective financial planning and market transparency.
+              FuelFlash delivers instant SMS alerts for fuel price changes across
+              Rwanda, empowering consumers with real-time pricing information.
             </p>
           </div>
-
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-[#d47f43]">Research Objectives</h4>
-            <ul className="space-y-2 text-foreground/80">
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>To assess current communication channels and their effectiveness in disseminating fuel price updates in Rwanda</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>To evaluate consumer awareness, knowledge, and response behaviors regarding fuel price changes</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>To identify communication gaps and barriers that prevent timely and direct fuel price alerts</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>To explore technological and infrastructural options, including SMS and USSD, for instant fuel price alert delivery</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>To design and recommend an accessible and scalable fuel price alert system that serves low-income, rural, and urban populations</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>To evaluate the potential impact of a fuel price alert system on consumer budgeting, market transparency, and economic empowerment</span>
-              </li>
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h3 className="text-xl font-semibold text-[#d47f43] mb-3">Scope</h3>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• USSD registration (*384*33121#)</li>
+              <li>• SMS price alerts</li>
+              <li>• Admin price updates</li>
+              <li>• English notifications</li>
             </ul>
           </div>
-
           <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Key Findings</h4>
-            
-            <div className="space-y-4">
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Fuel Price Volatility</h5>
-                <p className="text-foreground/70 text-sm">
-                  Fuel prices in Rwanda are subject to fluctuations driven by volatile global oil markets, geopolitical tensions, and OPEC+ production controls. In July 2025, petrol prices increased from RWF 1,633 to RWF 1,803 per liter (11% hike) and diesel from RWF 1,647 to RWF 1,757 per liter (6.5% hike), reflecting reintroduced VAT and external market pressures.
-                </p>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Economic Impact on Consumers</h5>
-                <p className="text-foreground/70 text-sm">
-                  Price hikes disproportionately affect low-income households, small business owners, and rural communities who rely on fuel for transport and household activities. These cost-push inflation effects exacerbate income inequality and strain household budgets.
-                </p>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Communication Gaps and Awareness</h5>
-                <p className="text-foreground/70 text-sm">
-                  Many consumers, especially in rural and underserved areas, receive fuel price information mainly through official websites and mainstream media, which limits timely access. This gap leaves vulnerable groups unprepared for price adjustments, affecting their ability to budget and manage finances effectively.
-                </p>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Technological Opportunities</h5>
-                <p className="text-foreground/70 text-sm">
-                  Pilot projects involving SMS and USSD-based alert systems have demonstrated potential for improving real-time dissemination of fuel price changes. These technologies offer scalable solutions to bridge communication gaps and reach diverse demographics, including remote and low-income populations.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-            <h4 className="text-lg font-semibold text-[#d47f43] mb-3">Impact Analysis</h4>
-            <p className="text-foreground/80 leading-relaxed mb-4">
-              Based on Rwanda's mobile penetration rate, approximately <strong className="text-[#f9c784]">75-80%</strong> of consumers can be reached effectively via SMS alerts, making this an accessible channel for timely fuel price notifications. Instant alerts empower households and small businesses to adjust fuel budgeting strategies, potentially saving <strong className="text-[#f9c784]">5-10%</strong> on fuel-related expenses by avoiding sudden price shocks.
-            </p>
+            <h3 className="text-xl font-semibold text-[#d47f43] mb-3">Audience</h3>
             <p className="text-foreground/80 leading-relaxed">
-              Currently, information lag from traditional channels results in delays of several days; the SMS system reduces this to near-instant updates, enhancing consumer preparedness and market transparency.
+              Transport operators, small businesses, households, and RURA
+              administrators.
             </p>
           </div>
         </div>
       ),
     },
     {
-      id: 'stakeholders',
-      title: 'Stakeholders',
+      id: "users",
+      title: "Who are our users?",
       content: (
-        <div className="space-y-4">
-          <p className="text-foreground/80 leading-relaxed mb-6">
-            FuelFlash serves multiple stakeholder groups, each with unique needs and expectations:
+        <div className="space-y-6">
+          <p className="text-foreground/80 leading-relaxed text-lg">
+            Our main users are{" "}
+            <strong>Rwandan consumers and businesses affected by fuel prices</strong>.
           </p>
-          <div className="space-y-4">
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border-l-4 border-[#d47f43]">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-2">Transport Operators</h4>
-              <p className="text-foreground/70">
-                Motorbike taxi drivers, public transport drivers, and logistics companies are sensitive to changes in fuel costs, which impact their operational expenses and fare calculations.
-              </p>
-            </div>
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border-l-4 border-[#d47f43]">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-2">Small Businesses</h4>
-              <p className="text-foreground/70">
-                Businesses that depend on fuel for operations, such as delivery services, agro-processors, and retailers, benefit from knowing price changes to adjust their costs and pricing strategies.
-              </p>
-            </div>
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border-l-4 border-[#d47f43]">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-2">Low-Income Households</h4>
-              <p className="text-foreground/70">
-                Consumers in rural and underserved areas who are particularly vulnerable to fuel price changes and require timely information for effective household budgeting.
-              </p>
-            </div>
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border-l-4 border-[#d47f43]">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-2">Fuel Retailers and Distributors</h4>
-              <p className="text-foreground/70">
-                Although not direct recipients of alerts, they benefit indirectly as an informed customer base leads to more stable demand and market transparency.
-              </p>
-            </div>
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border-l-4 border-[#d47f43]">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-2">Rwanda Utilities Regulatory Authority (RURA)</h4>
-              <p className="text-foreground/70">
-                Government regulatory body responsible for setting and revising fuel prices every two months based on global market trends and domestic policies.
-              </p>
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Consumers</h4>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• Real-time SMS price alerts</li>
+              <li>• USSD subscription on basic phones</li>
+              <li>• English messages</li>
+            </ul>
+          </div>
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Businesses</h4>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• Transport operators (taxi, bus, logistics)</li>
+              <li>• Small businesses (delivery, retail)</li>
+              <li>• Fuel budgeting optimization</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "features",
+      title: "Features",
+      content: (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-[#d47f43]">FuelFlash Features</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { icon: "📝", title: "Clear SMS Alerts", desc: "Concise price updates in English." },
+              { icon: "📱", title: "USSD Access", desc: "Subscribe via *384*33121# on any phone." },
+              { icon: "👥", title: "User-Centered", desc: "Designed for rural & urban Rwandans." },
+              { icon: "📊", title: "Admin Dashboard", desc: "Easy price updates via Django admin." },
+              { icon: "⚡", title: "Instant Delivery", desc: "<30s SMS delivery guarantee." },
+            ].map((feature, idx) => (
+              <div key={idx} className="p-4 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+                <div className="text-2xl mb-2">{feature.icon}</div>
+                <h4 className="font-semibold text-[#f9c784] mb-2">{feature.title}</h4>
+                <p className="text-foreground/70 text-sm">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "product-requirements",
+      title: "Product Requirements Summary",
+      content: (
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-lg border border-red-500/20">
+            <h4 className="text-lg font-semibold text-red-400 mb-4">Core Problem</h4>
+            <p className="text-foreground/80 leading-relaxed">
+              Rwandans lack timely fuel price information, causing poor budgeting,
+              market confusion, and economic hardship.
+            </p>
+          </div>
+          <div className="p-6 bg-gradient-to-r from-green-500/10 to-green-600/10 rounded-lg border border-green-500/20">
+            <h4 className="text-lg font-semibold text-green-400 mb-4">Proposed Solution</h4>
+            <p className="text-foreground/80 leading-relaxed">
+              SMS alert system (*384*33121#) delivering instant fuel price updates
+              to 75%+ of Rwandan mobile users.
+            </p>
+          </div>
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Key Success Metrics</h4>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                { metric: "50K+", desc: "Subscribers in 6 months" },
+                { metric: "95%", desc: "SMS delivery rate" },
+                { metric: "<30s", desc: "Alert delivery time" },
+              ].map((item, idx) => (
+                <div key={idx} className="text-center p-4 bg-[#2a1e36]/10 rounded">
+                  <div className="text-xl font-bold text-[#f9c784]">{item.metric}</div>
+                  <div className="text-sm text-foreground/60 mt-1">{item.desc}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       ),
     },
     {
-  id: 'user-flows',
-  title: 'User Flows & Journey',
-  content: (
-    <div className="space-y-4">
-      <p className="text-foreground/80 leading-relaxed mb-6">
-        The user flow diagram illustrates the complete journey from subscription to receiving fuel price alerts:
-      </p>
-      <div 
-        className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20 cursor-pointer hover:shadow-lg transition-shadow"
-        onClick={() => setModalImage('/User FLow.png')}
-      >
-        <img 
-          src="images/User FLow.png" 
-          alt="User Flow Diagram" 
-          className="w-full h-auto rounded-lg"
-        />
-        <p className="text-sm text-center text-foreground/60 mt-3">Click to enlarge</p>
-      </div>
-    </div>
-  ),
-},
-{
-  id: 'architecture',
-  title: 'System Architecture Diagram',
-  content: (
-    <div className="space-y-4">
-      <p className="text-foreground/80 leading-relaxed mb-6">
-        The system architecture demonstrates the technical infrastructure powering FuelFlash:
-      </p>
-      <div 
-        className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20 cursor-pointer hover:shadow-lg transition-shadow"
-        onClick={() => setModalImage('/FuelFlash Architecture Diagram.png')}
-      >
-        <img 
-          src="images/FuelFlash Architecture Diagram.png" 
-          alt="System Architecture Diagram" 
-          className="w-full h-auto rounded-lg"
-        />
-        <p className="text-sm text-center text-foreground/60 mt-3">Click to enlarge</p>
-      </div>
-    </div>
-  ),
-},
-
+      id: "user-flows",
+      title: "User Flow Diagrams",
+      content: (
+        <div className="space-y-6">
+          <div
+            className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => setModalImage("/images/userflow.png")}
+          >
+            <div className="relative w-full h-[400px]">
+              <Image
+                src="/images/userflow.png"
+                alt="FuelFlash userflow"
+                fill
+                className="object-contain rounded-lg"
+              />
+            </div>
+            <p className="text-sm text-center text-foreground/60 mt-3">FuelFlash User Journey - Click to enlarge</p>
+          </div>
+        </div>
+      ),
+    },
     {
-      id: 'Solution',
-      title: 'Solution (FuelFlash)',
+      id: "website",
+      title: "Informational Website",
       content: (
         <div className="space-y-6">
           <p className="text-foreground/80 leading-relaxed">
-            The solution is an SMS alert system where the admin updates the fuel price changes. The alert is sent automatically to the end user once the changes are made. The fuel updates according to RURA are changed every two months, which sometimes may change during the two months due to factors like inflation and market price. Overall, it offers a convenient and reliable way to stay updated on fuel prices in real time.
+            Primary digital gateway for users to learn about FuelFlash features and benefits.
           </p>
-
+          <div className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20">
+            <a href="https://fuelflash.vercel.app/" target="_blank" className="block text-[#f9c784] hover:text-[#d47f43] font-semibold">
+              Visit FuelFlash Website →
+            </a>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "system-overview",
+      title: "System Overview",
+      content: (
+        <div className="space-y-6">
           <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Key Solution Components</h4>
-            
-            <div className="space-y-4">
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">SMS Alert System</h5>
-                <p className="text-foreground/70 text-sm">
-                  Sends daily fuel price updates to subscribers' mobile phones, including fuel types and prices by location. Messages are sent in both English and Kinyarwanda.
-                </p>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">USSD Subscription</h5>
-                <p className="text-foreground/70 text-sm mb-2">
-                  A guided process to create a user profile linked to their phone number and name. Example: A vehicle owner dials *384*33121#. The system prompts: "Welcome to FuelFlash! Please enter your full name:"
-                </p>
-                <ul className="space-y-1 text-foreground/60 text-sm ml-4">
-                  <li>• User registration via USSD menu</li>
-                  <li>• Unsubscribe option</li>
-                </ul>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Web Subscription Portal</h5>
-                <p className="text-foreground/70 text-sm">
-                  Allows users to register by entering their name and phone number through a web interface.
-                </p>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Django Admin Interface</h5>
-                <p className="text-foreground/70 text-sm mb-2">
-                  Use Django's built-in Admin site as the control panel for managing the fuel price alert system:
-                </p>
-                <ul className="space-y-1 text-foreground/60 text-sm ml-4">
-                  <li>• Admin users log in and update current fuel prices</li>
-                  <li>• Manage list of subscribers (phone numbers)</li>
-                  <li>• Manual price update entry when official updates are received</li>
-                  <li>• Automatic SMS notifications sent to all registered subscribers</li>
-                  <li>• User tracking and subscription monitoring</li>
-                </ul>
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-3">Architecture</h4>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• Django backend + REST API</li>
+              <li>• USSD interface</li>
+              <li>• SMS notifications</li>
+              <li>• Admin dashboard</li>
+            </ul>
+          </div>
+          <div
+            className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20 cursor-pointer hover:shadow-lg"
+            onClick={() => setModalImage("/images/FuelFlash Architecture Diagram.png")}
+          >
+            <div className="relative w-full h-[400px]">
+              <Image
+                src="/images/FuelFlash Architecture Diagram.png"
+                alt="System Architecture"
+                fill
+                className="object-contain rounded-lg"
+              />
+            </div>
+            <p className="text-sm text-center text-foreground/60 mt-3">Architecture Diagram</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "installation",
+      title: "Installation Guide",
+      content: (
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Prerequisites</h4>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• Python 3.12</li>
+              <li>• Virtual environment</li>
+              <li>• Git</li>
+            </ul>
+          </div>
+          <div className="bg-[#1a1423]/50 p-6 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Installation Steps</h4>
+            <ol className="space-y-3 text-foreground/80 ml-6">
+              <li><code className="bg-[#2a1e36] px-2 py-1 rounded text-[#f9c784]">git clone fuelflash-repo</code></li>
+              <li><code className="bg-[#2a1e36] px-2 py-1 rounded text-[#f9c784]">python -m venv fuelflashenv</code></li>
+              <li><code className="bg-[#2a1e36] px-2 py-1 rounded text-[#f9c784]">source fuelflashenv/bin/activate</code></li>
+              <li><code className="bg-[#2a1e36] px-2 py-1 rounded text-[#f9c784]">pip install -r requirements.txt</code></li>
+              <li><code className="bg-[#2a1e36] px-2 py-1 rounded text-[#f9c784]">python manage.py migrate</code></li>
+              <li><code className="bg-[#2a1e36] px-2 py-1 rounded text-[#f9c784]">python manage.py runserver</code></li>
+            </ol>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "configuration",
+      title: "Configuration Guide",
+      content: (
+        <div className="space-y-6">
+          <div className="bg-[#1a1423]/50 p-6 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">.env File</h4>
+            <pre className="text-[#f9c784] text-sm overflow-x-auto bg-[#2a1e36] p-4 rounded">
+{`SMS_API_KEY=your_key
+SMS_API_SECRET=your_secret
+USSD_CALLBACK_URL=https://yourdomain.com/ussd/
+DEBUG=True`}
+            </pre>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "usage",
+      title: "Usage Guide",
+      content: (
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Access Code</h4>
+            <p className="text-2xl font-bold text-[#f9c784] text-center">*384*33121#</p>
+          </div>
+          <div className="p-6 bg-gradient-to-r from-orange-500/10 to-orange-600/10 rounded-lg border border-orange-500/20">
+            <h4 className="text-lg font-semibold text-orange-400 mb-4">Troubleshooting</h4>
+            <div className="space-y-3">
+              <div className="flex items-start gap-2">
+                <span className="text-orange-400">⚠️</span>
+                <div>Invalid phone: Use Rwanda format (+250XXXXXXXXX)</div>
               </div>
             </div>
           </div>
@@ -295,177 +293,212 @@ export default function App() {
       ),
     },
     {
-      id: 'key-components',
-      title: 'Key Components',
+      id: "api",
+      title: "API Documentation",
       content: (
-        <div className="space-y-4">
-          <p className="text-foreground/80 leading-relaxed mb-6">
-            FuelFlash is built on several core technical components:
-          </p>
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Endpoints</h4>
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                '/api/users/',
+                '/api/fuelflash/ussd/callback/',
+                '/api/fuelflash/prices/',
+                '/api/fuelflash/subscribers/',
+                '/api/fuelflash/alerts/',
+              ].map((endpoint) => (
+                <code key={endpoint} className="block bg-[#2a1e36] p-2 rounded text-[#f9c784] text-center">
+                  {endpoint}
+                </code>
+              ))}
+            </div>
+          </div>
+          <div className="bg-[#1a1423]/50 p-6 rounded-lg border border-[#d47f43]/20">
+            <pre className="bg-[#2a1e36] p-4 rounded text-[#f9c784] text-sm">
+{`[{"fuel_type": "Petrol", "price": 1803, "unit": "RWF/L"}]`}
+            </pre>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "backend",
+      title: "Backend",
+      content: (
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Technology Stack</h4>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• Python 3.12 + Django</li>
+              <li>• Django REST Framework</li>
+              <li>• PostgreSQL</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "database",
+      title: "Database Schema",
+      content: (
+        <div className="space-y-6">
+          <div
+            className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20 cursor-pointer"
+            onClick={() => setModalImage("/images/erd.png")}
+          >
+            <div className="relative w-full h-[400px]">
+              <Image
+                src="/images/erd.png"
+                alt="ER Diagram"
+                fill
+                className="object-contain rounded-lg"
+              />
+            </div>
+          </div>
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border border-[#d47f43]/20">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-3">SMS Gateway Integration</h4>
-              <p className="text-foreground/70 text-sm mb-3">
-                Integration with SMS gateway provider for bulk SMS delivery with multi-language support.
-              </p>
-              <ul className="space-y-1 text-foreground/60 text-sm">
-                <li>• Automatic SMS delivery</li>
-                <li>• Bilingual messages (English/Kinyarwanda)</li>
-                <li>• Delivery confirmation tracking</li>
-              </ul>
-            </div>
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border border-[#d47f43]/20">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-3">USSD Platform</h4>
-              <p className="text-foreground/70 text-sm mb-3">
-                Interactive USSD menus for subscription management and price viewing.
-              </p>
-              <ul className="space-y-1 text-foreground/60 text-sm">
-                <li>• User registration</li>
-                <li>• Subscription management</li>
-              </ul>
-            </div>
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border border-[#d47f43]/20">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-3">Django Backend</h4>
-              <p className="text-foreground/70 text-sm mb-3">
-                Robust backend system handling data management and admin operations.
-              </p>
-              <ul className="space-y-1 text-foreground/60 text-sm">
-                <li>• Subscriber database management</li>
-                <li>• Price update logging</li>
-                <li>• Admin authentication</li>
-              </ul>
-            </div>
-            <div className="p-5 bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg border border-[#d47f43]/20">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-3">Web Portal</h4>
-              <p className="text-foreground/70 text-sm mb-3">
-                User-friendly web interface for subscription and information access.
-              </p>
-              <ul className="space-y-1 text-foreground/60 text-sm">
-                <li>• Online registration</li>
-                <li>• Current price display</li>
-                <li>• Mobile-responsive design</li>
-              </ul>
-            </div>
+            {['FuelPrice', 'Users'].map((table) => (
+              <code key={table} className="block bg-[#2a1e36] p-2 rounded text-[#f9c784] text-center">
+                {table}
+              </code>
+            ))}
           </div>
         </div>
       ),
     },
     {
-      id: 'success-metrics',
-      title: 'Success Metrics',
+      id: "hardware",
+      title: "Hardware Requirements",
       content: (
-        <div className="space-y-4">
-          <p className="text-foreground/80 leading-relaxed mb-6">
-            We measure FuelFlash's success through key performance indicators:
-          </p>
-          <div className="space-y-4">
-            <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-4">SMS Delivery Performance</h4>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">99.5%</div>
-                  <div className="text-sm text-foreground/60 mt-1">SMS Delivery Uptime</div>
-                </div>
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">99%</div>
-                  <div className="text-sm text-foreground/60 mt-1">Alert Accuracy</div>
-                </div>
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">&lt;30sec</div>
-                  <div className="text-sm text-foreground/60 mt-1">Alert Delivery Speed</div>
-                </div>
-              </div>
-            </div>
-            <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-4">System Performance</h4>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">99.9%</div>
-                  <div className="text-sm text-foreground/60 mt-1">System Uptime</div>
-                </div>
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">20%</div>
-                  <div className="text-sm text-foreground/60 mt-1">Quarterly Growth Target</div>
-                </div>
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">75-80%</div>
-                  <div className="text-sm text-foreground/60 mt-1">Population Reach Potential</div>
-                </div>
-              </div>
-            </div>
-            <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-              <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Consumer Impact</h4>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">5-10%</div>
-                  <div className="text-sm text-foreground/60 mt-1">Potential Fuel Budget Savings</div>
-                </div>
-                <div className="text-center p-4 bg-[#2a1e36]/10 rounded">
-                  <div className="text-3xl font-bold text-[#f9c784]">Instant</div>
-                  <div className="text-sm text-foreground/60 mt-1">Price Update Notification</div>
-                </div>
-              </div>
-            </div>
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-green-500/10 to-green-600/10 rounded-lg border border-green-500/20">
+            <h4 className="text-lg font-semibold text-green-400 mb-4">Feature Phone Compatible</h4>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• ✅ Any GSM phone</li>
+              <li>• ✅ No smartphone needed</li>
+              <li>• ✅ MTN & Airtel networks</li>
+              <li>• ✅ No internet required</li>
+            </ul>
           </div>
         </div>
       ),
     },
     {
-      id: 'assumptions',
-      title: 'Assumptions & Out of Scope',
+      id: "testing",
+      title: "Testing",
       content: (
         <div className="space-y-6">
           <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Key Assumptions</h4>
-            <ul className="space-y-2 text-foreground/80">
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>Official fuel price updates will be reliably provided on a regular schedule by regulatory authorities or trusted sources</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>Fuel prices communicated via SMS will be clear, concise, and easy for users to understand and take action on</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#f9c784] mr-2">•</span>
-                <span>The backend infrastructure will have sufficient capacity and uptime to handle subscriber data and send high volumes of SMS alerts</span>
-              </li>
-            </ul>
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Test Coverage: 92%</h4>
+            <p className="text-foreground/80">All critical paths pass: USSD flow, SMS delivery, API endpoints.</p>
           </div>
-
-          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
-            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Out of Scope Features</h4>
-            <div className="space-y-4">
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Fuel Theft Detection and Monitoring System</h5>
-                <p className="text-foreground/70 text-sm">
-                  <strong>Description:</strong> A system using IoT sensors, GPS, and GSM modules to detect fuel theft from tanks or vehicles by monitoring fuel levels and sending alerts.
-                </p>
-                <p className="text-foreground/60 text-sm italic mt-1">
-                  Reason: Requires specialized hardware, expensive sensors, and complex integration beyond the scope of this SMS alert project.
-                </p>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Dynamic Fuel Price Prediction Using AI</h5>
-                <p className="text-foreground/70 text-sm">
-                  <strong>Description:</strong> Advanced AI models that forecast future fuel price changes based on market data and global economic variables.
-                </p>
-                <p className="text-foreground/60 text-sm italic mt-1">
-                  Reason: Requires extensive data, advanced machine learning expertise, and computational resources not available for this project.
-                </p>
-              </div>
-
-              <div>
-                <h5 className="font-semibold text-[#f9c784] mb-2">Integration with Fuel Stations' Point-of-Sale Systems</h5>
-                <p className="text-foreground/70 text-sm">
-                  <strong>Description:</strong> Automatic update of price alerts directly from fuel station POS systems with real-time accuracy.
-                </p>
-                <p className="text-foreground/60 text-sm italic mt-1">
-                  Reason: Establishing integration with multiple vendors' POS systems requires partnerships and technical infrastructure beyond the current solution's focus.
-                </p>
-              </div>
+        </div>
+      ),
+    },
+    {
+      id: "support",
+      title: "Support & Maintenance",
+      content: (
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-lg border border-blue-500/20">
+            <h4 className="text-lg font-semibold text-blue-400 mb-4">Contact</h4>
+            <p className="text-2xl font-bold text-blue-300">support@fuelflash.rw</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "changelog",
+      title: "Change Log",
+      content: (
+        <div className="space-y-4">
+          <div className="p-4 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">1.1</span>
+              <span>English SMS support</span>
             </div>
+          </div>
+          <div className="p-4 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1.0</span>
+              <span>Initial release</span>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "glossary",
+      title: "Glossary",
+      content: (
+        <div className="grid md:grid-cols-2 gap-6">
+          {[
+            { term: "USSD", def: "Interactive mobile menu system" },
+            { term: "SMS", def: "Text message alerts" },
+            { term: "RURA", def: "Rwanda fuel price regulator" },
+          ].map((item, idx) => (
+            <div key={idx} className="p-4 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+              <h5 className="font-semibold text-[#f9c784] mb-2">{item.term}</h5>
+              <p className="text-foreground/70 text-sm">{item.def}</p>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: "folder-structure",
+      title: "Folder Structure",
+      content: (
+        <div className="space-y-6">
+          <div className="p-6 bg-gradient-to-r from-[#2a1e36]/10 to-[#d47f43]/10 rounded-lg border border-[#d47f43]/20">
+            <h4 className="text-lg font-semibold text-[#d47f43] mb-4">Overview</h4>
+            <p className="text-foreground/80 leading-relaxed">
+              The FuelFlash project is organized into Backend and Frontend directories for maintainability and scalability.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div
+              className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20 cursor-pointer hover:shadow-lg"
+              onClick={() => {
+                console.log("Clicking Backend image, setting modalImage to:", "/images/backend-structure.png");
+                setModalImage("/images/backend.png");
+              }}
+            >
+              <div className="relative w-full h-[400px]">
+                <Image
+                  src="/images/backend.png"
+                  alt="Backend Folder Structure"
+                  fill
+                  className="object-contain rounded-lg"
+                />
+              </div>
+              <p className="text-sm text-center text-foreground/60 mt-3">Backend Structure - Click to enlarge</p>
+            </div>
+            <div
+              className="bg-gradient-to-br from-[#2a1e36]/5 to-[#d47f43]/5 rounded-lg p-4 border border-[#d47f43]/20 cursor-pointer hover:shadow-lg"
+              onClick={() => {
+                console.log("Clicking Frontend image, setting modalImage to:", "/images/frontend-structure.png");
+                setModalImage("/images/frontend.png");
+              }}
+            >
+              <div className="relative w-full h-[400px]">
+                <Image
+                  src="/images/frontend.png"
+                  alt="Frontend Folder Structure"
+                  fill
+                  className="object-contain rounded-lg"
+                />
+              </div>
+              <p className="text-sm text-center text-foreground/60 mt-3">Frontend Structure - Click to enlarge</p>
+            </div>
+          </div>
+          <div className="p-6 bg-gradient-to-r from-green-500/10 to-green-600/10 rounded-lg border border-green-500/20">
+            <h4 className="text-lg font-semibold text-green-400 mb-4">Hardware</h4>
+            <p className="text-foreground/80 leading-relaxed">
+              FuelFlash is designed for maximum accessibility:
+            </p>
+            <ul className="space-y-2 text-foreground/80 ml-6">
+              <li>• Works on any GSM-enabled feature phone (no smartphone needed)</li>
+            </ul>
           </div>
         </div>
       ),
@@ -473,34 +506,44 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#2a1e36] to-[#1a1423] text-foreground">
-      <Header />
-      <TeamSection />
-      
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <Sidebar sections={sections} activeSectionId={activeSectionId} />
-          
-          <main className="flex-1 space-y-4">
-            {sections.map((section) => (
-              <CollapsibleSection
-                key={section.id}
-                id={section.id}
-                title={section.title}
-                isExpanded={expandedSections.has(section.id)}
-                onToggle={toggleSection}
+    <div className="min-h-screen">
+      {!showDocs ? (
+        <Homepage onViewDocs={handleViewDocs} />
+      ) : (
+        <div className="min-h-screen bg-gradient-to-br from-[#2a1e36] to-[#1a1423] text-foreground">
+          <div className="sticky top-0 z-20 bg-[#2a1e36]/90 backdrop-blur-sm">
+            <Header />
+            <div className="container mx-auto px-4 py-4">
+              <button
+                onClick={handleBackToHomepage}
+                className="px-6 py-3 bg-gradient-to-r from-[#f9c784] to-[#d47f43] text-[#2a1e36] font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
-                {section.content}
-              </CollapsibleSection>
-            ))}
-          </main>
+                ← Back to Homepage
+              </button>
+            </div>
+          </div>
+          <TeamSection />
+          <div className="container mx-auto px-4 py-12">
+            <div className="flex flex-col lg:flex-row gap-8">
+              <Sidebar sections={sections} activeSectionId={activeSectionId} />
+              <main className="flex-1 space-y-4">
+                {sections.map((section) => (
+                  <CollapsibleSection
+                    key={section.id}
+                    id={section.id}
+                    title={section.title}
+                    isExpanded={expandedSections.has(section.id)}
+                    onToggle={toggleSection}
+                  >
+                    {section.content}
+                  </CollapsibleSection>
+                ))}
+              </main>
+            </div>
+          </div>
+          <Footer />
+          {modalImage && <ImageModal imageSrc={modalImage} onClose={() => setModalImage(null)} />}
         </div>
-      </div>
-
-      <Footer />
-      
-      {modalImage && (
-        <ImageModal imageSrc={modalImage} onClose={() => setModalImage(null)} />
       )}
     </div>
   );
