@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 interface HomepageProps {
-  onViewDocs: () => void; // Define the prop type for onViewDocs
+  onViewDocs: () => void; 
 }
 
 export default function Homepage({ onViewDocs }: HomepageProps) {
@@ -10,13 +10,12 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
 
   const handleViewDocsClick = () => {
     setIsLoading(true);
-    if (onViewDocs) onViewDocs(); // Call the parent function to switch views
+    if (onViewDocs) onViewDocs(); 
     setIsLoading(false);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2a1e36] via-[#1a1423] to-[#0f0a15] text-white overflow-hidden">
-      {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#d47f43]/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#f9c784]/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -24,7 +23,6 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
 
       <div className="relative z-10 container mx-auto px-4 py-16 text-center">
         <div className="max-w-4xl mx-auto space-y-12">
-          {/* Logo */}
           <div className="flex justify-center mb-8">
             <div className="relative">
               <div className="w-24 h-24 bg-gradient-to-r from-[#f9c784] to-[#d47f43] rounded-full flex items-center justify-center shadow-2xl">
@@ -35,8 +33,6 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
               </div>
             </div>
           </div>
-
-          {/* Welcome Message */}
           <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-[#f9c784] via-[#d47f43] to-[#f9c784] bg-clip-text text-transparent leading-tight">
             Welcome to Fuel<span className="text-[#d47f43]">Flash</span>
           </h1>
@@ -51,7 +47,6 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
             documentation and learn more about our features, system, and usage.
           </p>
 
-          {/* USSD Code - Big & Bold */}
           <div className="p-6 bg-gradient-to-r from-[#2a1e36]/50 to-[#d47f43]/20 rounded-2xl border-2 border-[#d47f43]/30 backdrop-blur-sm">
             <p className="text-3xl md:text-4xl font-bold text-[#f9c784] tracking-wider">
               Dial *384*33121#
@@ -61,21 +56,20 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
             </p>
           </div>
 
-          {/* CTA Button */}
           <div className="flex justify-center">
             <button
               onClick={handleViewDocsClick}
               disabled={isLoading}
               className="px-8 py-4 bg-gradient-to-r from-[#f9c784] to-[#d47f43] text-[#2a1e36] font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50"
             >
-              {isLoading ? "Loading..." : "📚 Explore Documentation"}
+              {isLoading ? "Loading..." : "Explore Documentation"}
             </button>
           </div>
 
-          {/* Footer */}
+          
           <div className="mt-16 pt-12 border-t border-[#d47f43]/20">
             <p className="text-[#d47f43]/60">
-              Made with ❤️ for Rwanda |{" "}
+              Made with love for Rwanda |{" "}
               <span className="text-[#f9c784]">support@fuelflash.rw</span>
             </p>
           </div>
