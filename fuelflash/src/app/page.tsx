@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Header from "./components/Header";
-import TeamSection from "./components/TeamSection";
 import Sidebar from "./components/Sidebar";
 import CollapsibleSection from "./components/CollapsibleSection";
 import ImageModal from "./components/ImageModal";
@@ -745,7 +744,6 @@ DEBUG=True`}
               </button>
             </div>
           </div>
-          <TeamSection />
           <div className="container mx-auto px-4 py-12">
             <div className="flex flex-col lg:flex-row gap-8">
               <Sidebar sections={sections} activeSectionId={activeSectionId} />
