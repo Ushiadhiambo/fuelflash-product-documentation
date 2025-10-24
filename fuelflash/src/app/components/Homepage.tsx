@@ -40,13 +40,11 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
           <p className="text-xl md:text-2xl text-[#d47f43] font-medium leading-relaxed">
             Your gateway to instant SMS fuel price alerts across Rwanda!
           </p>
-
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
             Discover how FuelFlash empowers Rwandan consumers and businesses with
             real-time fuel price updates. Click below to explore the full
             documentation and learn more about our features, system, and usage.
           </p>
-
           <div className="p-6 bg-gradient-to-r from-[#2a1e36]/50 to-[#d47f43]/20 rounded-2xl border-2 border-[#d47f43]/30 backdrop-blur-sm">
             <p className="text-3xl md:text-4xl font-bold text-[#f9c784] tracking-wider">
               Dial *384*33121#
@@ -55,7 +53,6 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
               On any phone - No internet needed
             </p>
           </div>
-
           <div className="flex justify-center">
             <button
               onClick={handleViewDocsClick}
@@ -66,7 +63,6 @@ export default function Homepage({ onViewDocs }: HomepageProps) {
             </button>
           </div>
 
-          
           <div className="mt-16 pt-12 border-t border-[#d47f43]/20">
             <p className="text-[#d47f43]/60">
               Made with love for Rwanda |{" "}
